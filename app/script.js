@@ -18,9 +18,7 @@ const gameboard = (function () {
 
   // Expects a player object and player choice (number) to place marker to a cell
   const placeMarker = (player, playerChoice) => {
-    console.log(playerChoice)
     cell = getBoard().find((cell) => cell.getPosition() == playerChoice)
-    console.log(cell)
     cell.addMarker(player.getMarker())
   }
 
@@ -45,4 +43,7 @@ function player(name = 'Player', marker) {
 }
 
 // Game simulation in console
+console.log(gameboard.printBoard())
 const player1 = player("Player1", "X")
+gameboard.placeMarker(player1, 2)
+console.log(gameboard.printBoard())
