@@ -1,24 +1,40 @@
 const gameboard = (function () {
   const board = []
   for (let i = 0; i < 9; i++) {
-    board[i] = cell()
+    board[i] = cell(' ', i)
   }
+
+  const getBoard = () => board
 
   const printBoard = () => {
     console.log(`
-     ${board[0].mark} | ${board[1].mark} | ${board[2].mark}  
+     ${board[0].getMark()} | ${board[1].getMark()} | ${board[2].getMark()}  
     ---|---|---
-     ${board[3].mark} | ${board[4].mark} | ${board[5].mark}
+     ${board[3].getMark()} | ${board[4].getMark()} | ${board[5].getMark()}
     ---|---|---
-     ${board[6].mark} | ${board[7].mark} | ${board[8].mark}  
+     ${board[6].getMark()} | ${board[7].getMark()} | ${board[8].getMark()}  
   `)
   }
 
-  return { printBoard }
+  // Expects a player object and player choice (number) to place marker to a cell
+  const placeMarker = (player, playerChoice) => {
+    console.log(playerChoice)
+    cell = getBoard().find((cell) => cell.getPosition() == playerChoice)
+    console.log(cell)
+    cell.addMarker(player.getMarker())
+  }
+
+  return { getBoard, printBoard, placeMarker }
 })();
 
-function cell(mark = ' ') {
-  return { mark }
+function cell(mark = ' ', position) {
+  const getMark = () => mark
+  const getPosition = () => position
+  const addMarker = (marker) => {
+    mark = marker
+  }
+
+  return { getMark, getPosition, addMarker }
 };
 
 function player(name = 'Player', marker) {
@@ -27,3 +43,6 @@ function player(name = 'Player', marker) {
 
   return { getName, getMarker }
 }
+
+// Game simulation in console
+const player1 = player("Player1", "X")
