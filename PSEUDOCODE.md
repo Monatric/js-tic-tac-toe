@@ -32,6 +32,13 @@ The goal of the first iteration is to build the entire project within the consol
     - This must have a function that determines the winner
     - Add loggers if necessary
 
+1. Player
+
+    **General description**: This is a basic function that returns a player's name and marker as an object
+
+    - Return the player's name
+    - Return the player's marker
+
 ## Second Iteration
 
 Coming soon...
