@@ -25,6 +25,38 @@ const gameboard = (function () {
   return { getBoard, printBoard, placeMarker }
 })();
 
+/* 
+** Controls the functionalities of the game, rounds, and player interaction.
+** Pass player objects as the arguments 
+*/
+const gameController = (function () {
+  const players = []
+  let activePlayer = null
+
+  const setPlayers = (playerOne, playerTwo) => players.push(playerOne, playerTwo)
+
+  const switchTurn = () => {
+    return activePlayer == players[0] ? activePlayer = players[1] : activePlayer = players[0]
+  }
+
+  const getActivePlayer = () => activePlayer
+
+  const start = () => {
+    activePlayer = players[0]
+    console.log("Let's play Tic Tac Toe!")
+    gameboard.printBoard()
+    console.log(`${getActivePlayer().getName()}'s turn with ${getActivePlayer().getMarker()} marker.`)
+    playRound()
+  }
+
+  const playRound = () => {
+    switchTurn()
+
+  }
+
+  return { start, switchTurn, getActivePlayer, setPlayers }
+})();
+
 function cell(mark = ' ', position) {
   const getMark = () => mark
   const getPosition = () => position
@@ -43,7 +75,8 @@ function player(name = 'Player', marker) {
 }
 
 // Game simulation in console
-console.log(gameboard.printBoard())
-const player1 = player("Player1", "X")
-gameboard.placeMarker(player1, 2)
-console.log(gameboard.printBoard())
+const playerOne = player("Player1", "X")
+const playerTwo = player("Player2", "O")
+gameController.setPlayers(playerOne, playerTwo)
+gameController.start()
+gameboard.placeMarker(playerOne, 2)
