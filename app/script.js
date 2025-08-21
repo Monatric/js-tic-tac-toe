@@ -45,13 +45,17 @@ const gameController = (function () {
     activePlayer = players[0]
     console.log("Let's play Tic Tac Toe!")
     gameboard.printBoard()
-    console.log(`${getActivePlayer().getName()}'s turn with ${getActivePlayer().getMarker()} marker.`)
     playRound()
   }
 
   const playRound = () => {
-    switchTurn()
-
+    console.log("Select a square to place marker")
+    while (gameboard.getBoard().find((cell) => cell.getMark() == ' ')) {
+      console.log(`${getActivePlayer().getName()}'s turn with ${getActivePlayer().getMarker()} marker.`)
+      gameboard.placeMarker(getActivePlayer(), Math.floor(Math.random() * 9))
+      gameboard.printBoard()
+      switchTurn()
+    }
   }
 
   return { start, switchTurn, getActivePlayer, setPlayers }
@@ -79,4 +83,4 @@ const playerOne = player("Player1", "X")
 const playerTwo = player("Player2", "O")
 gameController.setPlayers(playerOne, playerTwo)
 gameController.start()
-gameboard.placeMarker(playerOne, 2)
+// gameboard.placeMarker(playerOne, 2)
