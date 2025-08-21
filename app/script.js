@@ -19,4 +19,11 @@ const gameboard = (function () {
 
 function cell(mark = ' ') {
   return { mark }
-}; 
+};
+
+function player(name = 'Player', marker) {
+  const getName = () => name
+  const getMarker = () => marker
+
+  return { getName, getMarker }
+}
