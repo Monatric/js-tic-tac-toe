@@ -114,17 +114,51 @@ const gameController = (function () {
 
 // This deals with all of the UI for the game
 const screenController = (function () {
+  // Show modal when new game btn is clicked
+  const newGameBtn = document.querySelector("#newGameBtn")
+  const newGameDialog = document.querySelector("#newGameDialog")
+  const newGameForm = document.querySelector("#newGameForm")
+
+  newGameBtn.addEventListener("click", () => {
+    newGameDialog.showModal()
+  })
+
+  // Start game when form is completed
+  newGameForm.addEventListener("submit", (event) => {
+    event.preventDefault()
+
+    const formData = new FormData(event.target)
+    const playerOne = player(formData.get("player-one-name"), 'X')
+    const playerTwo = player(formData.get("player-two-name"), 'O')
+    gameController.setPlayers(playerOne, playerTwo)
+    gameController.start()
+
+    newGameDialog.close()
+  })
+
+  newGameDialog.addEventListener("close", () => {
+
+  })
+
   const setBoard = () => {
-    for (let i = 0; i <= 3; i++) {
+    const boardDiv = document.querySelector(".board")
+    for (let i = 0; i < 3; i++) {
       const col = document.createElement('div')
-      for (let j = 0; j <= 3; i++) {
+      col.classList = 'col'
+
+      for (let j = 0; j < 3; j++) {
         const cell = document.createElement('div')
         cell.classList = 'cell'
-
-        const img = document.createElement('img')
-        cell.appendChild(img)
         col.appendChild(cell)
       }
+
+      col.addEventListener("click", (event) => {
+        if (event.target.classList == 'cell') {
+          console.log(event.target)
+        }
+      })
+
+      boardDiv.appendChild(col)
     }
   }
 
@@ -149,15 +183,11 @@ function player(name = 'Player', marker) {
   return { getName, getMarker }
 }
 
-// Show modal when new game btn is clicked
-const newGameBtn = document.querySelector("#newGameBtn")
-const newGameDialog = document.querySelector("#newGameDialog")
-newGameBtn.addEventListener("click", () => {
-  newGameDialog.showModal()
-})
+// On page load functions that should run
+screenController.setBoard()
 
 // Game simulation in console
-const playerOne = player("Player1", "X")
-const playerTwo = player("Player2", "O")
-gameController.setPlayers(playerOne, playerTwo)
-gameController.start()
+// const playerOne = player("Player1", "X")
+// const playerTwo = player("Player2", "O")
+// gameController.setPlayers(playerOne, playerTwo)
+// gameController.start()
