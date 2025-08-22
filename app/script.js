@@ -53,9 +53,11 @@ const gameController = (function () {
     playRound()
   }
 
+  const isBoardIncomplete = () => gameboard.getBoard().find((cell) => cell.getMark() == ' ')
+
   const playRound = () => {
     console.log("Select a square to place marker")
-    while (gameboard.getBoard().find((cell) => cell.getMark() == ' ')) {
+    while (isBoardIncomplete()) {
       console.log(`${getActivePlayer().getName()}'s turn with ${getActivePlayer().getMarker()} marker.`)
       let playerChoice = Math.floor(Math.random() * 9)
 
