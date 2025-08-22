@@ -1,8 +1,8 @@
 # Pseudocode
 
-## First Iteration
+## First Phase
 
-The goal of the first iteration is to build the entire project within the console. All of the functionalities of the game must be proven working before working with the DOM, which will be started at the next iteration.
+The goal of the first phase is to build the entire project within the console. All of the functionalities of the game must be proven working before working with the DOM, which will be started at the next phase.
 
 ### Objects needed
 
@@ -39,6 +39,4 @@ The goal of the first iteration is to build the entire project within the consol
     - Return the player's name
     - Return the player's marker
 
-## Second Iteration
-
-Coming soon...
+## Second Phase
