@@ -17,7 +17,6 @@ const gameboard = (function () {
   }
 
   const isValidMove = (playerChoice) => {
-    console.log(getBoard().find((cell) => cell.getPosition() == playerChoice).isEmpty())
     return getBoard().find((cell) => cell.getPosition() == playerChoice).isEmpty()
   }
 
