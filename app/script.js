@@ -61,7 +61,6 @@ const gameController = (function () {
   const isBoardIncomplete = () => gameboard.getBoard().find((cell) => cell.getMark() == ' ')
 
   const setWinner = () => {
-
     for (const winCondition of winConditions) {
       const combination = []
 
