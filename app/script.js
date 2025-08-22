@@ -118,6 +118,7 @@ const screenController = (function () {
   const newGameBtn = document.querySelector("#newGameBtn")
   const newGameDialog = document.querySelector("#newGameDialog")
   const newGameForm = document.querySelector("#newGameForm")
+  const cancelBtn = document.querySelector("#cancelBtn")
 
   newGameBtn.addEventListener("click", () => {
     newGameDialog.showModal()
@@ -138,6 +139,10 @@ const screenController = (function () {
 
   newGameDialog.addEventListener("close", () => {
 
+  })
+
+  cancelBtn.addEventListener("click", () => {
+    newGameDialog.close()
   })
 
   const setBoard = () => {
