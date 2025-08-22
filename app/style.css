@@ -7,6 +7,14 @@ body {
   background-color: rgb(185, 236, 238);
 }
 
+button {
+  padding: 0.75rem;
+}
+
+.hide {
+  display: none !important;
+}
+
 .container {
   display: flex;
   justify-content: center;
@@ -17,7 +25,6 @@ body {
 .container .ttt {
   display: flex;
   justify-content: center;
-  align-items: center;
   width: 750px;
   gap: 1rem;
 }
@@ -52,4 +59,24 @@ body {
 
 .ttt .details {
   width: 35%;
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  padding: 1.5rem 1rem;
+}
+
+.ttt .details .new-game {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.ttt .details .new-game #tttBtnLabel {
+  align-self: center;
+}
+
+.ttt .details .game-details {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
 }
