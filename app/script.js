@@ -120,6 +120,9 @@ const screenController = (function () {
   const newGameForm = document.querySelector("#newGameForm")
   const cancelBtn = document.querySelector("#cancelBtn")
 
+  const newGameDetailsDiv = document.querySelector(".details .new-game")
+  const gameDetailsDiv = document.querySelector(".details .game-details")
+
   newGameBtn.addEventListener("click", () => {
     newGameDialog.showModal()
   })
@@ -133,6 +136,9 @@ const screenController = (function () {
     const playerTwo = player(formData.get("player-two-name"), 'O')
     gameController.setPlayers(playerOne, playerTwo)
     gameController.start()
+
+    newGameDetailsDiv.classList.add("hide")
+    gameDetailsDiv.classList.remove("hide")
 
     newGameDialog.close()
   })
