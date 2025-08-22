@@ -35,8 +35,14 @@ const gameboard = (function () {
 ** Pass player objects as the arguments 
 */
 const gameController = (function () {
+  const winConditions = [
+    [0, 1, 2], [3, 4, 5], [6, 7, 8], // Horizontal
+    [0, 3, 6], [1, 4, 7], [2, 5, 8], // Vertical
+    [0, 4, 8], [2, 4, 6]             // Diagonal
+  ]
   const players = []
   let activePlayer = null
+  let winner = null
 
   const setPlayers = (playerOne, playerTwo) => players.push(playerOne, playerTwo)
 
@@ -55,6 +61,26 @@ const gameController = (function () {
 
   const isBoardIncomplete = () => gameboard.getBoard().find((cell) => cell.getMark() == ' ')
 
+  const setWinner = () => {
+
+    for (const winCondition of winConditions) {
+      const combination = []
+
+      winCondition.forEach((position) => {
+        const cell = gameboard.getBoard().find(cell => cell.getPosition() == position)
+        combination.push(cell.getMark().toUpperCase())
+      })
+
+      const winForX = combination.join('') == 'XXX'
+      const winForO = combination.join('') == 'OOO'
+
+      if (winForX || winForO) {
+        winner = getActivePlayer().getName()
+        break;
+      }
+    }
+  }
+
   const playRound = () => {
     console.log("Select a square to place marker")
     while (isBoardIncomplete()) {
@@ -67,6 +93,10 @@ const gameController = (function () {
 
       gameboard.placeMarker(getActivePlayer(), playerChoice)
       gameboard.printBoard()
+
+      setWinner()
+      if (winner) { break }
+
       switchTurn()
     }
   }
