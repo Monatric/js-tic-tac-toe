@@ -7,8 +7,10 @@ body {
   background-color: rgb(185, 236, 238);
 }
 
-button {
+#newGameBtn {
   padding: 0.75rem;
+  align-self: center;
+  margin-top: 1rem;
 }
 
 .hide {
@@ -63,6 +65,8 @@ button {
   border-radius: 12px;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
   padding: 1.5rem 1rem;
+  display: flex;
+  flex-direction: column;
 }
 
 .ttt .details .new-game {
