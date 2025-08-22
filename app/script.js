@@ -74,7 +74,7 @@ const gameController = (function () {
       const winForO = combination.join('') == 'OOO'
 
       if (winForX || winForO) {
-        winner = getActivePlayer().getName()
+        winner = getActivePlayer()
         break;
       }
     }
@@ -97,6 +97,16 @@ const gameController = (function () {
       if (winner) { break }
 
       switchTurn()
+    }
+    // Announce conclusion. It's draw if it didn't break from the while loop
+    concludeRound()
+  }
+
+  const concludeRound = () => {
+    if (winner) {
+      console.log(`${winner.getName()} has won with ${winner.getMarker()}.`)
+    } else {
+      console.log("It's a draw. Play again?")
     }
   }
 
