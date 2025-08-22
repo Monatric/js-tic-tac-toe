@@ -42,7 +42,9 @@ const gameController = (function () {
   const players = []
   let activePlayer = null
   let winner = null
+  let result = null
 
+  const getPlayers = () => ({ playerOne: players[0], playerTwo: players[1] })
   const setPlayers = (playerOne, playerTwo) => players.push(playerOne, playerTwo)
 
   const switchTurn = () => {
@@ -60,6 +62,7 @@ const gameController = (function () {
 
   const isBoardIncomplete = () => gameboard.getBoard().find((cell) => cell.getMark() == ' ')
 
+  const getWinner = () => winner
   const setWinner = () => {
     for (const winCondition of winConditions) {
       const combination = []
@@ -103,13 +106,17 @@ const gameController = (function () {
 
   const concludeRound = () => {
     if (winner) {
+      result = 'win'
       console.log(`${winner.getName()} has won with ${winner.getMarker()}.`)
     } else {
+      result = 'draw'
       console.log("It's a draw. Play again?")
     }
   }
 
-  return { start, switchTurn, getActivePlayer, setPlayers }
+  const getResult = () => result
+
+  return { start, switchTurn, getActivePlayer, setPlayers, getPlayers, getWinner, getResult }
 })();
 
 // This deals with all of the UI for the game
@@ -122,6 +129,11 @@ const screenController = (function () {
 
   const newGameDetailsDiv = document.querySelector(".details .new-game")
   const gameDetailsDiv = document.querySelector(".details .game-details")
+
+  const currentTurnParagraph = document.querySelector("#currentTurn")
+  const playerOneParagraph = document.querySelector("#playerOne")
+  const playerTwoParagraph = document.querySelector("#playerTwo")
+  const resultParagraph = document.querySelector("#result")
 
   newGameBtn.addEventListener("click", () => {
     newGameDialog.showModal()
@@ -139,6 +151,8 @@ const screenController = (function () {
 
     newGameDetailsDiv.classList.add("hide")
     gameDetailsDiv.classList.remove("hide")
+
+    updateGameDetails()
 
     newGameDialog.close()
   })
@@ -173,7 +187,26 @@ const screenController = (function () {
     }
   }
 
-  return { setBoard }
+  const updateGameDetails = () => {
+    const playerOneName = gameController.getPlayers().playerOne.getName()
+    const playerTwoName = gameController.getPlayers().playerTwo.getName()
+    const activePlayerName = gameController.getActivePlayer().getName()
+    const winner = gameController.getWinner()
+
+    currentTurnParagraph.textContent = `Current turn: ${activePlayerName}`
+    playerOneParagraph.textContent = `Player 1: ${playerOneName}`
+    playerTwoParagraph.textContent = `Player 2: ${playerTwoName}`
+
+    if (!gameController.getResult()) {
+      resultParagraph.textContent = "The game is still ongoing."
+    } else if (gameController.getResult() == 'draw') {
+      resultParagraph.textContent = "The game is a draw."
+    } else {
+      resultParagraph.textContent = `The winner is ${winner.getName()}`
+    }
+  }
+
+  return { setBoard, updateGameDetails }
 })();
 
 function cell(mark = ' ', position) {
