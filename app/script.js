@@ -112,6 +112,25 @@ const gameController = (function () {
   return { start, switchTurn, getActivePlayer, setPlayers }
 })();
 
+// This deals with all of the UI for the game
+const screenController = (function () {
+  const setBoard = () => {
+    for (let i = 0; i <= 3; i++) {
+      const col = document.createElement('div')
+      for (let j = 0; j <= 3; i++) {
+        const cell = document.createElement('div')
+        cell.classList = 'cell'
+
+        const img = document.createElement('img')
+        cell.appendChild(img)
+        col.appendChild(cell)
+      }
+    }
+  }
+
+  return { setBoard }
+})();
+
 function cell(mark = ' ', position) {
   const getMark = () => mark
   const getPosition = () => position
@@ -129,6 +148,13 @@ function player(name = 'Player', marker) {
 
   return { getName, getMarker }
 }
+
+// Show modal when new game btn is clicked
+const newGameBtn = document.querySelector("#newGameBtn")
+const newGameDialog = document.querySelector("#newGameDialog")
+newGameBtn.addEventListener("click", () => {
+  newGameDialog.showModal()
+})
 
 // Game simulation in console
 const playerOne = player("Player1", "X")

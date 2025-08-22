@@ -52,6 +52,30 @@
       </div>
     </section>
   </main>
+
+  <dialog closedby="any" id="newGameDialog">
+    <form action="" id="newGameForm">
+      <h2>Add player names</h2>
+      <div>
+        <h3>Player One</h3>
+        <label for="player-one-name">Name:</label>
+        <input type="text" name="player-one-name" maxlength="16" required>
+        <p>Marker: X</p>
+      </div>
+      <br>
+      <div>
+        <h3>Player Two</h3>
+        <label for="player-two-name">Name:</label>
+        <input type="text" name="player-two-name" maxlength="16" required>
+        <p>Marker: O</p>
+      </div>
+      <br>
+      <div>
+        <button value="cancel" formmethod="dialog" type="button" id="cancelBtn">Cancel</button>
+        <button id="submitBtn">Start</button>
+      </div>
+    </form>
+  </dialog>
   <script src="script.js"></script>
 </body>
 
