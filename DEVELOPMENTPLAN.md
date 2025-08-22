@@ -40,3 +40,23 @@ The goal of the first phase is to build the entire project within the console. A
     - Return the player's marker
 
 ## Second Phase
+
+The goal of the second phase is to write objects/functions that handles the display/DOM logics. These should render the gameboard, interact with markers, and all the rules and functions of the TTT game.
+
+### Objects Needed
+
+1. ScreenController
+
+    **General description**: This is a function that deals with the display or the "screen" for the tic tac toe game.
+
+    - Display the round conclusion (winner/draw/loser)
+    - Display the board's markers
+    - Interaction with the board's cell for placing markers and rule enforcements
+    - Allow users to write their name
+    - Allow users to start/restart game
+
+### The View
+
+#### Prototype
+
+![Prototype TTT view](public/prototype-ttt-view.jpeg)
