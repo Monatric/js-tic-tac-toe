@@ -1,3 +1,29 @@
+* {
+  outline: 1px solid red;
+}
+
 body {
+  font-family: Verdana, sans-serif;
   background-color: rgb(185, 236, 238);
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.container .ttt {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.ttt .board {
+  width: 70%;
+}
+
+.ttt .details {
+  width: 30%;
 }
