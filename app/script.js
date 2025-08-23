@@ -177,6 +177,8 @@ const screenController = (function () {
 
           event.target.appendChild(marker == 'X' ? xMarkerImg : oMarkerImg)
           gameController.playRound(event.target.dataset.position)
+
+          updateGameDetails()
         }
       })
       boardDiv.appendChild(cellDiv)
@@ -197,9 +199,13 @@ const screenController = (function () {
       resultParagraph.textContent = "The game is still ongoing."
     } else if (gameController.getResult() == 'draw') {
       resultParagraph.textContent = "The game is a draw."
+      disableBoard()
     } else {
       resultParagraph.textContent = `The winner is ${winner.getName()}`
+      disableBoard()
+
     }
+
   }
 
   function enableBoard() {
