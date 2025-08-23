@@ -17,11 +17,12 @@ const gameboard = (function () {
   }
 
   const isValidMove = (playerChoice) => {
-    return getBoard().find((cell) => cell.getPosition() == playerChoice).isEmpty()
+    return getBoard().find((cell) => cell.getPosition() == parseInt(playerChoice)).isEmpty()
   }
 
   // Expects a player object and player choice (number) to place marker to a cell
   const placeMarker = (player, playerChoice) => {
+    playerChoice
     cell = getBoard().find((cell) => cell.getPosition() == playerChoice)
     cell.addMarker(player.getMarker())
   }
@@ -57,7 +58,6 @@ const gameController = (function () {
     activePlayer = players[0]
     console.log("Let's play Tic Tac Toe!")
     gameboard.printBoard()
-    playRound()
   }
 
   const isBoardIncomplete = () => gameboard.getBoard().find((cell) => cell.getMark() == ' ')
@@ -82,26 +82,17 @@ const gameController = (function () {
     }
   }
 
-  const playRound = () => {
-    console.log("Select a square to place marker")
-    while (isBoardIncomplete()) {
-      console.log(`${getActivePlayer().getName()}'s turn with ${getActivePlayer().getMarker()} marker.`)
-      let playerChoice = Math.floor(Math.random() * 9)
+  const playRound = (playerChoice) => {
+    console.log(`${getActivePlayer().getName()}'s turn with ${getActivePlayer().getMarker()} marker.`)
 
-      while (!gameboard.isValidMove(playerChoice)) {
-        playerChoice = Math.floor(Math.random() * 9)
-      }
+    console.log(getActivePlayer())
+    gameboard.placeMarker(getActivePlayer(), playerChoice)
+    gameboard.printBoard()
 
-      gameboard.placeMarker(getActivePlayer(), playerChoice)
-      gameboard.printBoard()
+    setWinner()
+    if (winner || !isBoardIncomplete()) { concludeRound() }
 
-      setWinner()
-      if (winner) { break }
-
-      switchTurn()
-    }
-    // Announce conclusion. It's draw if it didn't break from the while loop
-    concludeRound()
+    switchTurn()
   }
 
   const concludeRound = () => {
@@ -116,7 +107,7 @@ const gameController = (function () {
 
   const getResult = () => result
 
-  return { start, switchTurn, getActivePlayer, setPlayers, getPlayers, getWinner, getResult }
+  return { start, switchTurn, getActivePlayer, setPlayers, getPlayers, getWinner, getResult, playRound }
 })();
 
 // This deals with all of the UI for the game
@@ -167,24 +158,26 @@ const screenController = (function () {
 
   const setBoard = () => {
     const boardDiv = document.querySelector(".board")
-    for (let i = 0; i < 3; i++) {
-      const col = document.createElement('div')
-      col.classList = 'col'
+    gameboard.getBoard().forEach((cell, index) => {
+      const cellDiv = document.createElement('div')
+      cellDiv.classList = 'cell'
+      cellDiv.dataset.position = index
 
-      for (let j = 0; j < 3; j++) {
-        const cell = document.createElement('div')
-        cell.classList = 'cell'
-        col.appendChild(cell)
-      }
-
-      col.addEventListener("click", (event) => {
+      cellDiv.addEventListener("click", (event) => {
         if (event.target.classList == 'cell') {
-          console.log(event.target)
+          const marker = gameController.getActivePlayer().getMarker()
+          const xMarkerImg = document.createElement('img')
+          xMarkerImg.src = './images/ttt-x.png'
+
+          const oMarkerImg = document.createElement('img')
+          oMarkerImg.src = './images/ttt-o.png'
+
+          event.target.appendChild(marker == 'X' ? xMarkerImg : oMarkerImg)
+          gameController.playRound(event.target.dataset.position)
         }
       })
-
-      boardDiv.appendChild(col)
-    }
+      boardDiv.appendChild(cellDiv)
+    })
   }
 
   const updateGameDetails = () => {

@@ -32,31 +32,22 @@ body {
 }
 
 .ttt .board {
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
   width: 65%;
   background-image: url("./images/ttt-bg.png");
 }
 
-.ttt .board .col {
-  width: 100%;
-  justify-content: center;
+.ttt .board .cell {
   display: flex;
-  flex-direction: column;
+  justify-content: center;
   align-items: center;
-}
-
-.ttt .board .col .cell {
-  width: 100%;
   height: 150px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
   border: 4px solid brown;
 }
 
-.ttt .board .col .cell img {
+.ttt .board .cell img {
   width: 100px;
-  height: 100px;
 }
 
 .ttt .details {
