@@ -190,14 +190,12 @@ const screenController = (function () {
   }
 
   const updateGameDetails = () => {
-
     const currentTurnParagraph = document.querySelector("#currentTurn")
     const playerOneParagraph = document.querySelector("#playerOne")
     const playerTwoParagraph = document.querySelector("#playerTwo")
     const resultParagraph = document.querySelector("#result")
 
     const playerOneName = gameController.getPlayers().playerOne.getName()
-    console.log(currentTurnParagraph)
     const playerTwoName = gameController.getPlayers().playerTwo.getName()
     const activePlayerName = gameController.getActivePlayer().getName()
     const winner = gameController.getWinner()
@@ -214,20 +212,18 @@ const screenController = (function () {
     } else {
       resultParagraph.textContent = `The winner is ${winner.getName()}`
       disableBoard()
-
     }
-
   }
 
-  function enableBoard() {
+  const enableBoard = () => {
     boardDiv.style.removeProperty('pointer-events')
   }
 
-  function disableBoard() {
+  const disableBoard = () => {
     boardDiv.style.pointerEvents = 'none' // Disable cells first upon setup
   }
 
-  function resetBoard() {
+  const resetBoard = () => {
     boardDiv.replaceChildren()
     setBoard()
   }
