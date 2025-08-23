@@ -97,7 +97,7 @@ const gameController = (function () {
     gameboard.printBoard()
 
     setWinner()
-    if (winner || !isBoardIncomplete()) { concludeRound() }
+    if (winner || !isBoardIncomplete()) { return concludeRound() }
 
     switchTurn()
   }
