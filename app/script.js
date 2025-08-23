@@ -258,8 +258,4 @@ function player(name = 'Player', marker) {
 // On page load functions that should run
 screenController.setBoard()
 
-// Game simulation in console
-// const playerOne = player("Player1", "X")
-// const playerTwo = player("Player2", "O")
-// gameController.setPlayers(playerOne, playerTwo)
-// gameController.start()
+// TODO: Refactor. Make code look readable and organized. All the project specs are met.
