@@ -126,6 +126,8 @@ const screenController = (function () {
   const playerTwoParagraph = document.querySelector("#playerTwo")
   const resultParagraph = document.querySelector("#result")
 
+  const boardDiv = document.querySelector(".board")
+
   newGameBtn.addEventListener("click", () => {
     newGameDialog.showModal()
   })
@@ -138,6 +140,7 @@ const screenController = (function () {
     const playerOne = player(formData.get("player-one-name"), 'X')
     const playerTwo = player(formData.get("player-two-name"), 'O')
     gameController.setPlayers(playerOne, playerTwo)
+    enableBoard()
     gameController.start()
 
     newGameDetailsDiv.classList.add("hide")
@@ -157,7 +160,7 @@ const screenController = (function () {
   })
 
   const setBoard = () => {
-    const boardDiv = document.querySelector(".board")
+    disableBoard()
     gameboard.getBoard().forEach((cell, index) => {
       const cellDiv = document.createElement('div')
       cellDiv.classList = 'cell'
@@ -197,6 +200,14 @@ const screenController = (function () {
     } else {
       resultParagraph.textContent = `The winner is ${winner.getName()}`
     }
+  }
+
+  function enableBoard() {
+    boardDiv.style.removeProperty('pointer-events')
+  }
+
+  function disableBoard() {
+    boardDiv.style.pointerEvents = 'none' // Disable cells first upon setup
   }
 
   return { setBoard, updateGameDetails }
