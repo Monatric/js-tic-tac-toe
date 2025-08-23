@@ -1,10 +1,13 @@
 const gameboard = (function () {
   const board = []
-  for (let i = 0; i < 9; i++) {
-    board[i] = cell(' ', i)
-  }
 
   const getBoard = () => board
+  const setBoard = () => {
+    board.length = 0 // Resets to empty, ensuring no cells
+    for (let i = 0; i < 9; i++) {
+      board.push(cell(' ', i))
+    }
+  }
 
   const printBoard = () => {
     console.log(`
@@ -22,12 +25,11 @@ const gameboard = (function () {
 
   // Expects a player object and player choice (number) to place marker to a cell
   const placeMarker = (player, playerChoice) => {
-    playerChoice
-    cell = getBoard().find((cell) => cell.getPosition() == playerChoice)
-    cell.addMarker(player.getMarker())
+    const selectedCell = getBoard().find((cell) => cell.getPosition() == playerChoice)
+    selectedCell.addMarker(player.getMarker())
   }
 
-  return { getBoard, printBoard, placeMarker, isValidMove }
+  return { getBoard, setBoard, printBoard, placeMarker, isValidMove }
 })();
 
 /* 
@@ -57,6 +59,7 @@ const gameController = (function () {
   const start = () => {
     activePlayer = players[0]
     console.log("Let's play Tic Tac Toe!")
+    gameboard.setBoard()
     gameboard.printBoard()
   }
 
@@ -120,11 +123,8 @@ const screenController = (function () {
 
   const newGameDetailsDiv = document.querySelector(".details .new-game")
   const gameDetailsDiv = document.querySelector(".details .game-details")
+  console.log(gameDetailsDiv.innerHTML)
 
-  const currentTurnParagraph = document.querySelector("#currentTurn")
-  const playerOneParagraph = document.querySelector("#playerOne")
-  const playerTwoParagraph = document.querySelector("#playerTwo")
-  const resultParagraph = document.querySelector("#result")
 
   const boardDiv = document.querySelector(".board")
 
@@ -136,11 +136,14 @@ const screenController = (function () {
   newGameForm.addEventListener("submit", (event) => {
     event.preventDefault()
 
+    resetBoard() // Reset board every new game
+    enableBoard() // Enable board as it is disabled by default
+    resetGameDetails()
+
     const formData = new FormData(event.target)
     const playerOne = player(formData.get("player-one-name"), 'X')
     const playerTwo = player(formData.get("player-two-name"), 'O')
     gameController.setPlayers(playerOne, playerTwo)
-    enableBoard()
     gameController.start()
 
     newGameDetailsDiv.classList.add("hide")
@@ -160,6 +163,7 @@ const screenController = (function () {
   })
 
   const setBoard = () => {
+    gameboard.setBoard() // The internal workings for the TTT
     disableBoard()
     gameboard.getBoard().forEach((cell, index) => {
       const cellDiv = document.createElement('div')
@@ -186,7 +190,14 @@ const screenController = (function () {
   }
 
   const updateGameDetails = () => {
+
+    const currentTurnParagraph = document.querySelector("#currentTurn")
+    const playerOneParagraph = document.querySelector("#playerOne")
+    const playerTwoParagraph = document.querySelector("#playerTwo")
+    const resultParagraph = document.querySelector("#result")
+
     const playerOneName = gameController.getPlayers().playerOne.getName()
+    console.log(currentTurnParagraph)
     const playerTwoName = gameController.getPlayers().playerTwo.getName()
     const activePlayerName = gameController.getActivePlayer().getName()
     const winner = gameController.getWinner()
@@ -214,6 +225,16 @@ const screenController = (function () {
 
   function disableBoard() {
     boardDiv.style.pointerEvents = 'none' // Disable cells first upon setup
+  }
+
+  function resetBoard() {
+    boardDiv.replaceChildren()
+    setBoard()
+  }
+
+  const resetGameDetails = () => {
+    const defaultGameDetails = gameDetailsDiv.innerHTML
+    gameDetailsDiv.innerHTML = defaultGameDetails
   }
 
   return { setBoard, updateGameDetails }
