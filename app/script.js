@@ -48,7 +48,10 @@ const gameController = (function () {
   let result = null
 
   const getPlayers = () => ({ playerOne: players[0], playerTwo: players[1] })
-  const setPlayers = (playerOne, playerTwo) => players.push(playerOne, playerTwo)
+  const setPlayers = (playerOne, playerTwo) => {
+    players.length = 0 // Ensure no players before adding new ones
+    players.push(playerOne, playerTwo)
+  }
 
   const switchTurn = () => {
     return activePlayer == players[0] ? activePlayer = players[1] : activePlayer = players[0]
@@ -57,6 +60,7 @@ const gameController = (function () {
   const getActivePlayer = () => activePlayer
 
   const start = () => {
+    resetResultAndWinner() // Ensure winner and result are back to empty
     activePlayer = players[0]
     console.log("Let's play Tic Tac Toe!")
     gameboard.setBoard()
@@ -110,6 +114,11 @@ const gameController = (function () {
 
   const getResult = () => result
 
+  const resetResultAndWinner = () => {
+    winner = null
+    result = null
+  }
+
   return { start, switchTurn, getActivePlayer, setPlayers, getPlayers, getWinner, getResult, playRound }
 })();
 
@@ -123,8 +132,6 @@ const screenController = (function () {
 
   const newGameDetailsDiv = document.querySelector(".details .new-game")
   const gameDetailsDiv = document.querySelector(".details .game-details")
-  console.log(gameDetailsDiv.innerHTML)
-
 
   const boardDiv = document.querySelector(".board")
 
@@ -138,7 +145,6 @@ const screenController = (function () {
 
     resetBoard() // Reset board every new game
     enableBoard() // Enable board as it is disabled by default
-    resetGameDetails()
 
     const formData = new FormData(event.target)
     const playerOne = player(formData.get("player-one-name"), 'X')
@@ -226,11 +232,6 @@ const screenController = (function () {
   const resetBoard = () => {
     boardDiv.replaceChildren()
     setBoard()
-  }
-
-  const resetGameDetails = () => {
-    const defaultGameDetails = gameDetailsDiv.innerHTML
-    gameDetailsDiv.innerHTML = defaultGameDetails
   }
 
   return { setBoard, updateGameDetails }
