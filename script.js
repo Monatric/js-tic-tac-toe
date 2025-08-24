@@ -207,8 +207,8 @@ const screenController = (function () {
     const winner = gameController.getWinner()
 
     currentTurnParagraph.textContent = `Current turn: ${activePlayerName}`
-    playerOneParagraph.textContent = `Player 1: ${playerOneName}`
-    playerTwoParagraph.textContent = `Player 2: ${playerTwoName}`
+    playerOneParagraph.textContent = `Player 1: ${playerOneName} | X`
+    playerTwoParagraph.textContent = `Player 2: ${playerTwoName} | O`
 
     if (!gameController.getResult()) {
       resultParagraph.textContent = "The game is still ongoing."
