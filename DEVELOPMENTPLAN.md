@@ -1,4 +1,6 @@
-# Pseudocode
+# Development Plan
+
+The ideas here are not meant to be a strict 1:1 version of "from plan to code". It's just a general sense of how I figure things the obvious stuff out.
 
 ## First Phase
 
@@ -59,4 +61,5 @@ The goal of the second phase is to write objects/functions that handles the disp
 
 #### Prototype
 
+This is a rough prototype made with MS Paint. It doesn't need the greatest prototype for a simple project with a simple UI and interactions.
 ![Prototype TTT view](public/prototype-ttt-view.jpeg)
