@@ -1,3 +1,4 @@
+// This is the internal structure of the board, adds markers, and enforces move validation
 const gameboard = (function () {
   const board = []
 
